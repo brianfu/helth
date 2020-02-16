@@ -17,7 +17,7 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
 
     internal var floorHeight = 150f;
 
-    internal var collideSound =  Gdx.audio.newSound(Gdx.files.internal("collide.mp3"))
+    internal var collideSound =  Gdx.audio.newSound(Gdx.files.internal("collide.wav"))
 
     //Jump
     enum class JumpState{

@@ -75,7 +75,7 @@ public class GameScreen_1 implements Screen {
         platforms = new Array<>();
         spawnPlatforms();
 
-        enemy = new DeathBlock(1800f, floorHeight, 10);
+        enemy = new DeathBlock(1800f, floorHeight + 400f, 10);
         enemyImage = new Texture("fat.png");
 
         enemy.shoot(vegetable);

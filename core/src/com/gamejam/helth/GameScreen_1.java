@@ -31,7 +31,7 @@ public class GameScreen_1 implements Screen {
     public GameScreen_1(Helth game) {
         this.game = game;
 
-        dropImage = new Texture("droplet.png");
+        dropImage = new Texture("block.png");
         bucketImage = new Texture("bucket.png");
         backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0,0, 2220, 1080);
 
@@ -53,10 +53,10 @@ public class GameScreen_1 implements Screen {
 
     private void spawnRaindrops() {
         Block raindrop = new Block(0,0,50);
-        raindrop.x = 800;
-        raindrop.y = MathUtils.random(0, 480);
-        raindrop.width = 100f;
-        raindrop.height = 100f;
+        raindrop.x = 1080;
+        raindrop.y = MathUtils.random(500, 1080);
+        raindrop.width = 64;
+        raindrop.height = 64;
         raindrops.add(raindrop);
         lastDropTime = TimeUtils.nanoTime();
     }
@@ -110,7 +110,7 @@ public class GameScreen_1 implements Screen {
         while (iter.hasNext()) {
             Rectangle raindrop = iter.next();
             raindrop.x -= 200 * Gdx.graphics.getDeltaTime();
-            if (raindrop.x < 0) {
+            if (raindrop.x + 150 < 0) {
                 iter.remove();
             }
         }

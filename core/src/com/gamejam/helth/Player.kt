@@ -14,6 +14,7 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     }
 
     lateinit internal var characterImage : Texture //set in gameScreen
+    internal var charImgDamage = Texture("damaged_brocc.png")
 
     internal var floorHeight = 150f;
 
@@ -74,7 +75,7 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
 
     fun damage(){
         if (isDamaged()){
-            characterImage = Texture("damaged_brocc.png")
+            characterImage = charImgDamage
         }
     }
 

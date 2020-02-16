@@ -24,6 +24,7 @@ public class GameScreen_1 implements Screen {
     //Texture characterImage;
     Texture platformImage;
     TextureRegion floorImage;
+    Texture charImgDamage;
     //Texture platform6;
     //Texture platform3;
     //Texture playerImage;
@@ -71,6 +72,7 @@ public class GameScreen_1 implements Screen {
 
         //backgroundTexture = new Texture("plain_background.png");
         backgroundTexture = new TextureRegion(new Texture("plain_background.jpg"), 0, 0, 2220, 1080);
+        charImgDamage = new Texture("damaged_brocc.png");
 
         floorImage = new TextureRegion(new Texture("ground.png"), 0, 0, 2220, 150);
         floor = new GroundBlock(0, 0, 2220, floorHeight);
@@ -138,6 +140,10 @@ public class GameScreen_1 implements Screen {
         meleeEnemy.moveAround();
 
         game.batch.setProjectionMatrix(camera.combined);
+
+        if (vegetable.getHealth() <= 5 ){
+            vegetable.characterImage = charImgDamage;
+        }
 
         game.batch.begin();
         game.batch.draw(backgroundTexture, 0, 0);

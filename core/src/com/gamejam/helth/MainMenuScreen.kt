@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.utils.TimeUtils
 
 class MainMenuScreen(val game: Helth) : Screen {
 
@@ -30,6 +31,7 @@ class MainMenuScreen(val game: Helth) : Screen {
         game.batch.draw(backgroundTexture, 0f, 0f, 2220f, 1080f)
         game.batch.end()
         if (Gdx.input.justTouched()) {
+            game.startTime = TimeUtils.millis()
             game.screen = GameScreen_1(game)
             dispose()
         }

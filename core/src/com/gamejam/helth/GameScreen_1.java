@@ -89,7 +89,7 @@ public class GameScreen_1 implements Screen {
         platforms = new Array<>();
         spawnPlatforms();
 
-        enemy = new DeathBlock(1800f, floorHeight + 400f, 10);
+        enemy = new DeathBlock(1800f, floorHeight + 400f, 300);
         enemyImage = new Texture("fat.png");
 
         enemy.shoot(vegetable);
@@ -144,7 +144,7 @@ public class GameScreen_1 implements Screen {
         game.batch.draw(enemyImage, enemy.x, enemy.y);
         game.batch.draw(vegetable.characterImage, vegetable.x, vegetable.y, vegetable.width, vegetable.height);
 
-        if (enemy.collision(vegetable, 0f)){
+        if (enemy.collision(vegetable, 0f)) {
             vegetable.setHealth(0); //TODO: uncomment
             vegetable.death();
         }
@@ -184,28 +184,24 @@ public class GameScreen_1 implements Screen {
             camera.unproject(touchPos);
             vegetable.setInputState(Player.InputState.HELD);
             vegetable.jump();
-            if (isTouched(0, 0.50f)){
+            if (isTouched(0, 0.50f)) {
                 vegetable.x -= 300 * Gdx.graphics.getDeltaTime();
             }
 
-            if (isTouched(0.50f, 1)){
+            if (isTouched(0.50f, 1)) {
                 vegetable.x += 300 * Gdx.graphics.getDeltaTime();
             }
-        }
-
-
-
-        else {
+        } else {
             vegetable.setInputState(Player.InputState.NONE);
         }
 
 
         //keep vegetable within bounds
-        if (vegetable.x < 0){
+        if (vegetable.x < 0) {
             vegetable.x = 0;
         }
 
-        if (vegetable.x > 2000){
+        if (vegetable.x > 2000) {
             vegetable.x = 2000;
         }
 
@@ -236,13 +232,10 @@ public class GameScreen_1 implements Screen {
 
     }
 
-    private boolean isTouched(float startX, float endX)
-    {
-        for (int i = 0; i < 2; i++)
-        {
+    private boolean isTouched(float startX, float endX) {
+        for (int i = 0; i < 2; i++) {
             float x = Gdx.input.getX() / (float) Gdx.graphics.getWidth();
-            if (Gdx.input.isTouched(i) && (x >= startX && x <= endX))
-            {
+            if (Gdx.input.isTouched(i) && (x >= startX && x <= endX)) {
                 return true;
             }
         }

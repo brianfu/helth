@@ -13,7 +13,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
-import java.sql.Time;
 import java.util.Iterator;
 
 public class GameScreen_1 implements Screen {
@@ -59,7 +58,7 @@ public class GameScreen_1 implements Screen {
         backgroundTexture = new TextureRegion(new Texture("plain_background.jpg"), 0, 0, 2220, 1080);
 
         floorImage = new TextureRegion(new Texture("ground.png"), 0, 0, 2220, 150);
-        floor = new GroundBlock(0,0, 2220,  floorHeight);
+        floor = new GroundBlock(0, 0, 2220, floorHeight);
 
         //camera
         camera = new OrthographicCamera();
@@ -83,22 +82,22 @@ public class GameScreen_1 implements Screen {
     }
 
     private void spawnPlatforms() {
-        GroundBlock platform = new GroundBlock(0,0, platform_width, 100);
+        GroundBlock platform = new GroundBlock(0, 0, platform_width, 100);
         platform.x = 2220;
         platform.y = MathUtils.random(200, 600);
         platforms.add(platform);
         lastDropTime = TimeUtils.nanoTime();
     }
 
-    /*
-    private void spawnEnemies(){ //Don't run this too often
-        DeathBlock enemy = new DeathBlock(0,0, 10);
-        enemy.x = MathUtils.random(400, 2000);
-        enemies.add(enemy);
-        //lastEnemyTime = TimeUtils.nanoTime();
-        //lastEnemyDisappear = TimeUtils.nanoTime(); //Last time an enemy disappeared
-    }
-     */
+
+//    private void spawnEnemies(){ //Don't run this too often
+//        DeathBlock enemy = new DeathBlock(0,0, 10);
+//        enemy.x = MathUtils.random(400, 2000);
+//        enemies.add(enemy);
+//        //lastEnemyTime = TimeUtils.nanoTime();
+//        //lastEnemyDisappear = TimeUtils.nanoTime(); //Last time an enemy disappeared
+//    }
+
 
     @Override
     public void show() {
@@ -106,6 +105,7 @@ public class GameScreen_1 implements Screen {
     }
 
     private Vector2 centerTest = new Vector2();
+
     @Override
     public void render(float delta) {
 
@@ -121,7 +121,7 @@ public class GameScreen_1 implements Screen {
 
         game.batch.begin();
         game.batch.draw(backgroundTexture, 0, 0);
-        game.batch.draw(floorImage, 0,0);
+        game.batch.draw(floorImage, 0, 0);
         game.font.draw(game.batch, "Helth:" + vegetable.getHealth(), 1700f, 1000f);
         game.batch.draw(enemyImage, enemy.x, enemy.y);
         game.batch.draw(vegetable.characterImage, vegetable.x, vegetable.y, vegetable.width, vegetable.height);
@@ -142,18 +142,17 @@ public class GameScreen_1 implements Screen {
         }
 
 
-        for (BulletBlock bullet : vegetable.getEnemyBullets()){
+        for (BulletBlock bullet : vegetable.getEnemyBullets()) {
             game.batch.draw(bullet.getBulletImage(), bullet.x, bullet.y);
         }
 
         game.batch.end();
 
-        if (vegetable.getOnPlatformState() == Player.OnPlatformState.ON_PLATFORM){
-            if (!vegetable.collision(surface, 2f)){
+        if (vegetable.getOnPlatformState() == Player.OnPlatformState.ON_PLATFORM) {
+            if (!vegetable.collision(surface, 2f)) {
                 vegetable.setOnPlatformState(Player.OnPlatformState.BETWEEN_PLATFORMS);
             }
         }
-
 
 
         if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
@@ -162,9 +161,31 @@ public class GameScreen_1 implements Screen {
             camera.unproject(touchPos);
             vegetable.setInputState(Player.InputState.HELD);
             vegetable.jump(); //TODO: this only works sometimes, no idea why
-        } else{
+            if (isTouched(0, 0.50f)){
+                vegetable.x -= 300 * Gdx.graphics.getDeltaTime();
+            }
+
+            if (isTouched(0.50f, 1)){
+                vegetable.x += 300 * Gdx.graphics.getDeltaTime();
+            }
+        }
+
+
+
+        else {
             vegetable.setInputState(Player.InputState.NONE);
         }
+
+
+        //keep vegetable within bounds
+        if (vegetable.x < 0){
+            vegetable.x = 0;
+        }
+
+        if (vegetable.x > 2075){
+            vegetable.x = 2075;
+        }
+
 
         if (TimeUtils.nanoTime() - lastDropTime > 2000000000L) {
             spawnPlatforms();
@@ -179,17 +200,30 @@ public class GameScreen_1 implements Screen {
         }
 
 
-        if (TimeUtils.nanoTime() - lastShotFired > 2000000000L){
+        if (TimeUtils.nanoTime() - lastShotFired > 2000000000L) {
             enemy.shoot(vegetable);
             lastShotFired = TimeUtils.nanoTime();
         }
 
 
-        if(vegetable.isDead()){
+        if (vegetable.isDead()) {
             game.setScreen(new EndScreen(game));
             dispose();
         }
 
+    }
+
+    private boolean isTouched(float startX, float endX)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            float x = Gdx.input.getX() / (float) Gdx.graphics.getWidth();
+            if (Gdx.input.isTouched(i) && (x >= startX && x <= endX))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

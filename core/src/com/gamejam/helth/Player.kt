@@ -146,16 +146,6 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
 
     fun jumpCollider(block : GroundBlock){ //Call in GameScreen after jumpProcess
         //Loop through all blocks in GameScreen, check for collisions, if any, stop descending the jump
-//        if (this.collision(block, 2f)){ //if collided with a floor
-//            jumpState = JumpState.STANDING //stop falling
-//
-//            if (onPlatformState == OnPlatformState.BETWEEN_PLATFORMS){
-//                onPlatformState = OnPlatformState.ON_PLATFORM
-//            }
-//            else if (onPlatformState == OnPlatformState.OFF_PLATFORM){
-//                onPlatformState = OnPlatformState.ON_PLATFORM
-//            }
-//        }
         if (block.collision(this, 2f)){ //if collided with a floor
             jumpState = JumpState.STANDING //stop falling
 

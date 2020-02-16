@@ -1,5 +1,6 @@
 package com.gamejam.helth
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Actor
 
 class Player(x : Float, y : Float, size : Float, var health : Int, var bullets : Int) : Block(x, y, size) {
@@ -45,10 +46,12 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     }
 
     fun jump(){ //Call this in CODE (not render) to make it jump
-        jumpState = JumpState.ASCENDING
-        jumpOrigin = this.y  //Bottom of hitbox
-        jumpApex = jumpHeight + jumpOrigin
-        jumpApexReached = false //reset it
+        if (jumpState == JumpState.STANDING) {
+            jumpState = JumpState.ASCENDING
+            jumpOrigin = this.y  //Bottom of hitbox
+            jumpApex = jumpHeight + jumpOrigin
+            jumpApexReached = false //reset it
+        }
     }
 
     fun jumpProcess(){ //Call this constantly in render

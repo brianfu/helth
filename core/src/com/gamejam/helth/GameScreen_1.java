@@ -88,8 +88,8 @@ public class GameScreen_1 implements Screen {
         vegetable.width = 150;
         vegetable.height = 150;
 
-        meleeEnemy = new MeleeEnemyBlock(2000, floorHeight, 120f, vegetable, 10f); //20f for gameplay
-        //TODO: Change size of bucket
+        //Burger
+        meleeEnemy = new MeleeEnemyBlock(2000, floorHeight, 150f, vegetable, 20f); //20f for gameplay
 
         platforms = new Array<>();
         spawnPlatforms();
@@ -104,7 +104,7 @@ public class GameScreen_1 implements Screen {
     private void spawnPlatforms() {
         GroundBlock platform = new GroundBlock(0, 0, platform_width, 100);
         platform.x = 2220;
-        platform.y = MathUtils.random(200, 600);
+        platform.y = MathUtils.random(200, 750);
         platforms.add(platform);
         lastDropTime = TimeUtils.nanoTime();
     }

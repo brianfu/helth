@@ -30,7 +30,7 @@ class MeleeEnemyBlock(x : Float, y : Float, size : Float,
                movingLeft = false
             }
         }else{
-            if (this.x < 2220){
+            if (this.x < 2000){
                 this.x += speed
             }else {
                 movingLeft = true

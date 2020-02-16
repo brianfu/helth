@@ -1,7 +1,7 @@
 # Helth : Escape
 Team libgdx - BC Game Jam 2020
 
-![alt text](https://github.com/plasmalaser/helth/raw/master/android/assets/mainmenu.jpg)
+![alt text](https://github.com/plasmalaser/helth/raw/master/android/assets/header.png)
 
 **You are a broccoli.**
 

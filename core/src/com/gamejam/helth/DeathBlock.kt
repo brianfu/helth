@@ -21,9 +21,6 @@ open class DeathBlock(x : Float, y : Float, size : Float) : Block(x, y, size){
             player.health--
             hitsound.play()
         }
-        if (player.isDamaged()){
-            player.damage();
-        }
         if (player.isDead()){
             player.death()
         }

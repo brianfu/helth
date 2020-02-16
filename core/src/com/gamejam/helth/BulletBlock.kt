@@ -18,6 +18,7 @@ class BulletBlock(x : Float, y : Float, size : Float,
         //make bullets travel in a line toward player
         //make bullets only move left
         this.damage(player)
+
         if (this.collision(player)){
             usedBullet = true
         }

@@ -19,8 +19,6 @@ import sun.applet.Main;
 
 public class GameOverScreen implements Screen {
 
-
-
     final Helth game;
     Texture retryButtonTexture;
     OrthographicCamera camera;
@@ -74,8 +72,7 @@ public class GameOverScreen implements Screen {
         game.batch.end();
 
         if (Gdx.input.isTouched()){
-            game.setScreen(new MainMenuScreen(game));
-            //TODO : set it to GameScreen instead
+            game.setScreen(new GameScreen_1(game));
             dispose();
         }
 //        playButton.addListener( new ClickListener() {

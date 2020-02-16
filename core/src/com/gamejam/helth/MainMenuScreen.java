@@ -21,9 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class MainMenuScreen implements Screen {
 
-
-
-
     final Helth game;
     float inputTime = 0;
 //    Texture playButtonTexture;
@@ -63,15 +60,14 @@ public class MainMenuScreen implements Screen {
 //
 //        playButton.setSize(100, 100);
         game.batch.begin();
-        game.font2.draw(game.batch, "HELTH", 750, 700);
+        game.font.draw(game.batch, "HELTH", 750, 700);
         game.font.draw(game.batch, "PRESS ANYWHERE TO START", 570, 400);
 
 
         game.batch.end();
         if (Gdx.input.isTouched()){
             if (inputTime  == 0 || inputTime > 1) { //delay in seconds
-                game.setScreen(new GameOverScreen(game));
-                //TODO : set it to GameScreen instead
+                game.setScreen(new GameScreen_1(game));
                 dispose();
             }
 

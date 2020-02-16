@@ -9,7 +9,7 @@ open class DeathBlock(x : Float, y : Float, size : Float) : Block(x, y, size){
         //Call this every couple of renders
         //Only shoot in player's direction initially, no homing missles
 
-        spawnBullet(this.x, this.y, size/20, player) //bullets are 1/20th as big as their spawners
+        spawnBullet(this.x, this.y, 3f , player) //bullets are 1/20th as big as their spawners
     }
 
     fun damage(player : Player){ //called by every enemy against the player at every render

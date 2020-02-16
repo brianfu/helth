@@ -12,25 +12,35 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import java.sql.Time;
 import java.util.Iterator;
 
 public class GameScreen_1 implements Screen {
 
     final Helth game;
 
-    Texture characterImage;
+    //Texture characterImage;
     Texture platformImage;
-    Texture platform6;
-    Texture platform3;
-    Texture playerImage;
+    TextureRegion floorImage;
+    //Texture platform6;
+    //Texture platform3;
+    //Texture playerImage;
     OrthographicCamera camera;
     Player vegetable;
     Array<Block> platforms;
+    Array<DeathBlock> enemies;
+    GroundBlock floor;
     long lastDropTime;
-    int dropsGathered;
+    long lastShotFired;
+    //long lastEnemyDisappear;
+    //int dropsGathered;
     TextureRegion backgroundTexture;
 
+    DeathBlock enemy;
+    Texture enemyImage;
+
     private Block surface;
+    public float floorHeight = 150f;
     private float platform_width = 600f;
 
 
@@ -38,38 +48,56 @@ public class GameScreen_1 implements Screen {
         this.game = game;
 
         platformImage = new Texture("block.png");
-        characterImage = new Texture("broccoli.png");
 
-        backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0, 0, 2220, 1080);
-        platform6 = new Texture("platform6.png");
-        platform3 = new Texture("platform3.png");
-        playerImage = new Texture("bucket.png");
+        //backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0, 0, 2220, 1080);
+        //platform6 = new Texture("platform6.png");
+        //platform3 = new Texture("platform3.png");
+        //playerImage = new Texture("bucket.png");
 
         //backgroundTexture = new Texture("plain_background.png");
         backgroundTexture = new TextureRegion(new Texture("plain_background.jpg"), 0, 0, 2220, 1080);
+
+        floorImage = new TextureRegion(new Texture("ground.png"), 0, 0, 2220, 150);
+        floor = new GroundBlock(0,0, 2220,  floorHeight);
 
         //camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 2220, 1080);
 
-        vegetable = new Player(0, 0, 10, 100, 10);
-        vegetable.x = 0;
-        vegetable.y = 0;
+        vegetable = new Player(50, floorHeight, 10, 10, 10);
+        vegetable.setFloorHeight$core(floorHeight); //Tell the player where the ground is
+        vegetable.characterImage = new Texture("broccoli.png");
 
         vegetable.width = 150;
         vegetable.height = 150;
 
         platforms = new Array<>();
         spawnPlatforms();
+
+        enemy = new DeathBlock(1800f, floorHeight, 10);
+        enemyImage = new Texture("fat.png");
+
+        enemy.shoot(vegetable);
+        lastShotFired = TimeUtils.nanoTime();
     }
 
     private void spawnPlatforms() {
         GroundBlock platform = new GroundBlock(0,0, platform_width, 100);
         platform.x = 2220;
-        platform.y = MathUtils.random(200, 800);
+        platform.y = MathUtils.random(200, 600);
         platforms.add(platform);
         lastDropTime = TimeUtils.nanoTime();
     }
+
+    /*
+    private void spawnEnemies(){ //Don't run this too often
+        DeathBlock enemy = new DeathBlock(0,0, 10);
+        enemy.x = MathUtils.random(400, 2000);
+        enemies.add(enemy);
+        //lastEnemyTime = TimeUtils.nanoTime();
+        //lastEnemyDisappear = TimeUtils.nanoTime(); //Last time an enemy disappeared
+    }
+     */
 
     @Override
     public void show() {
@@ -86,11 +114,16 @@ public class GameScreen_1 implements Screen {
         camera.update();
         vegetable.jumpProcess();
 
+        vegetable.enemyBulletsUpdate();
+
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
         game.batch.draw(backgroundTexture, 0, 0);
-        game.batch.draw(characterImage, vegetable.x, vegetable.y, vegetable.width, vegetable.height);
+        game.batch.draw(floorImage, 0,0);
+        game.batch.draw(enemyImage, enemy.x, enemy.y);
+        game.batch.draw(vegetable.characterImage, vegetable.x, vegetable.y, vegetable.width, vegetable.height);
+
         for (Block platform : platforms) {
             game.batch.draw(platformImage, platform.x, platform.y);
 
@@ -105,6 +138,12 @@ public class GameScreen_1 implements Screen {
             }
 
         }
+
+
+        for (BulletBlock bullet : vegetable.getEnemyBullets()){
+            game.batch.draw(bullet.getBulletImage(), bullet.x, bullet.y);
+        }
+
         game.batch.end();
 
         if (vegetable.getOnPlatformState() == Player.OnPlatformState.ON_PLATFORM){
@@ -122,10 +161,9 @@ public class GameScreen_1 implements Screen {
             vegetable.jump(); //TODO: this only works sometimes, no idea why
         }
 
-        if (TimeUtils.nanoTime() - lastDropTime > 8000000000L) {
+        if (TimeUtils.nanoTime() - lastDropTime > 2000000000L) {
             spawnPlatforms();
         }
-
         Iterator<Block> iter = platforms.iterator();
         while (iter.hasNext()) {
             Block raindrop = iter.next();
@@ -133,11 +171,13 @@ public class GameScreen_1 implements Screen {
             if (raindrop.x + platform_width < 0) {
                 iter.remove();
             }
-
         }
 
 
-
+        if (TimeUtils.nanoTime() - lastShotFired > 2000000000L){
+            enemy.shoot(vegetable);
+            lastShotFired = TimeUtils.nanoTime();
+        }
 
     }
 
@@ -163,7 +203,7 @@ public class GameScreen_1 implements Screen {
 
     @Override
     public void dispose() {
-        characterImage.dispose();
+        vegetable.characterImage.dispose();
         platformImage.dispose();
 
     }

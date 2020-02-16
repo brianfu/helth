@@ -1,6 +1,7 @@
 package com.gamejam.helth
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.Actor
 
 class Player(x : Float, y : Float, size : Float, var health : Int, var bullets : Int) : Block(x, y, size) {
@@ -11,6 +12,9 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
         this.setPosition(x,y) //xy-coord at left bottom point
     }
 
+    lateinit internal var characterImage : Texture //set in gameScreen
+
+    internal var floorHeight = 150f;
 
     //Jump
     enum class JumpState{
@@ -27,16 +31,24 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     var jumpHeight = 800f //# of px to jump by, change in main
 
     var jumpState = JumpState.STANDING
-    var jumpOrigin = 0f //y-coord (this.top) of where the jump started (lateinit)
+    var jumpOrigin = floorHeight //y-coord (this.top) of where the jump started (lateinit)
     var jumpApex = 0f //jumpHeight + jumpOrigin (lateinit)
     var jumpApexReached = false
+    var leggo = "ez"
 
     val enemyBullets = ArrayList<BulletBlock>()
+    val usedBullets = ArrayList<BulletBlock>()
 
     fun enemyBulletsUpdate(){ //call this every render
         for (ele in enemyBullets){
             ele.update()
         }
+
+        //To fix concurrent modification exception
+        for (ele in usedBullets){
+            enemyBullets.remove(ele)
+        }
+        usedBullets.clear()
     }
 
 
@@ -49,6 +61,9 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
 
     fun death(){
         //dead brocc
+        if (isDead()){
+         characterImage = Texture("dead_brocc.png")
+        }
     }
 
     fun canShoot() : Boolean{ //Call every render and do smth if so
@@ -125,7 +140,7 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     }
 
     fun gravity(){
-        jumpOrigin = 0f
+        jumpOrigin = floorHeight
         jumpState = JumpState.DESCENDING
     }
 

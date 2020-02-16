@@ -1,10 +1,14 @@
 package com.gamejam.helth
 
+import com.badlogic.gdx.graphics.Texture
+
 class BulletBlock(x : Float, y : Float, size : Float,
                   val goal_x : Float, val goal_y : Float, val player: Player) : DeathBlock(x, y, size) {
 
+    val bulletImage = Texture("bullet.png")
+
     var usedBullet = false
-    val bulletSpeed = 3f //in px/frame
+    val bulletSpeed = 5f //in px/frame
 
     internal fun update(){ //this is internal, called by player object to update
         //make bullets travel in a line toward player
@@ -28,7 +32,7 @@ class BulletBlock(x : Float, y : Float, size : Float,
 
 
         if (usedBullet){
-            player.enemyBullets.remove(this)
+            player.usedBullets.add(this)
         }
     }
 

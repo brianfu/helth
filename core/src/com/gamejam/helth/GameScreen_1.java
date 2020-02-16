@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -29,8 +30,8 @@ public class GameScreen_1 implements Screen {
     int dropsGathered;
     TextureRegion backgroundTexture;
 
-    private Boolean isOnPlatform = false;
     private Block surface;
+    private float platform_width = 600f;
 
 
     public GameScreen_1(Helth game) {
@@ -63,8 +64,8 @@ public class GameScreen_1 implements Screen {
     }
 
     private void spawnPlatforms() {
-        GroundBlock platform = new GroundBlock(0,0,700, 100);
-        platform.x = 1080;
+        GroundBlock platform = new GroundBlock(0,0, platform_width, 100);
+        platform.x = 2220;
         platform.y = MathUtils.random(200, 800);
         platforms.add(platform);
         lastDropTime = TimeUtils.nanoTime();
@@ -75,6 +76,7 @@ public class GameScreen_1 implements Screen {
 
     }
 
+    private Vector2 centerTest = new Vector2();
     @Override
     public void render(float delta) {
 
@@ -95,21 +97,29 @@ public class GameScreen_1 implements Screen {
 //            if (vegetable.y != 0 && vegetable.getJumpState() == Player.JumpState.STANDING) {
 //                vegetable.gravity();
 //            }
-            if (vegetable.y > platform.y + 15) {
+
+            if (vegetable.collision(platform, 2f)) { //TODO: replace 2f with collision radius
                 vegetable.jumpCollider(platform);
                 surface = platform;
-                isOnPlatform = true;
+                vegetable.setOnPlatformState(Player.OnPlatformState.ON_PLATFORM);
             }
 
         }
         game.batch.end();
+
+        if (vegetable.getOnPlatformState() == Player.OnPlatformState.ON_PLATFORM){
+            if (!vegetable.collision(surface, 2f)){
+                vegetable.setOnPlatformState(Player.OnPlatformState.BETWEEN_PLATFORMS);
+            }
+        }
+
 
 
         if (Gdx.input.justTouched()) {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
-            vegetable.jump();
+            vegetable.jump(); //TODO: this only works sometimes, no idea why
         }
 
         if (TimeUtils.nanoTime() - lastDropTime > 8000000000L) {
@@ -119,8 +129,8 @@ public class GameScreen_1 implements Screen {
         Iterator<Block> iter = platforms.iterator();
         while (iter.hasNext()) {
             Block raindrop = iter.next();
-            raindrop.x -= 200 * Gdx.graphics.getDeltaTime();
-            if (raindrop.x + 450 < 0) {
+            raindrop.x -= 500 * Gdx.graphics.getDeltaTime();
+            if (raindrop.x + platform_width < 0) {
                 iter.remove();
             }
 

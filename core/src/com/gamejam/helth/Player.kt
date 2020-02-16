@@ -17,6 +17,11 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
         STANDING, ASCENDING, DESCENDING
     }
 
+    enum class OnPlatformState{
+        ON_PLATFORM, OFF_PLATFORM, BETWEEN_PLATFORMS
+    }
+
+    var onPlatformState = OnPlatformState.OFF_PLATFORM
 
     val jumpSpeed = 20f //jump by 2 px each frame
     var jumpHeight = 800f //# of px to jump by, change in main
@@ -59,16 +64,28 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
 
     fun jump(){ //Call this in CODE (not render) to make it jump
         if (jumpState == JumpState.STANDING) {
+
+            //onPlatformState == OnPlatformState.OFF_PLATFORM
             jumpState = JumpState.ASCENDING
             jumpOrigin = this.y  //Bottom of hitbox
             jumpApex = jumpHeight + jumpOrigin
             jumpApexReached = false //reset it
+
+            if (onPlatformState != OnPlatformState.BETWEEN_PLATFORMS){
+                onPlatformState = OnPlatformState.BETWEEN_PLATFORMS
+            }
+
         }
     }
 
     fun jumpProcess(){ //Call this constantly in render
-        if (jumpState == JumpState.STANDING){
-            return
+        if (jumpState == JumpState.STANDING){ //If standing
+            if (onPlatformState == OnPlatformState.BETWEEN_PLATFORMS) { //if standing in midair
+                this.gravity()
+            }
+            else { //If standing on something
+                return //Do nothing, no jump processing needed
+            }
         }
         else if (jumpState == JumpState.ASCENDING){
             if (this.y < jumpApex){
@@ -79,6 +96,11 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
             }
         }
         else if (jumpState == JumpState.DESCENDING){
+
+            if (onPlatformState == OnPlatformState.BETWEEN_PLATFORMS){
+                this.gravity() //TODO: replace all instance of 0f with floor value
+            }
+
             if(this.y > jumpOrigin){
                 this.y -= jumpSpeed
             }
@@ -90,9 +112,15 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
 
     fun jumpCollider(block : Block){ //Call in GameScreen after jumpProcess
         //Loop through all blocks in GameScreen, check for collisions, if any, stop descending the jump
-        this.gravity()
         if (this.collision(block, 2f)){ //if collided with a floor
             jumpState = JumpState.STANDING //stop falling
+
+            if (onPlatformState == OnPlatformState.BETWEEN_PLATFORMS){
+                onPlatformState = OnPlatformState.ON_PLATFORM
+            }
+            else if (onPlatformState == OnPlatformState.OFF_PLATFORM){
+                onPlatformState = OnPlatformState.ON_PLATFORM
+            }
         }
     }
 

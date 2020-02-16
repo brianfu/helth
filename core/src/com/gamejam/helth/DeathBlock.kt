@@ -13,7 +13,7 @@ open class DeathBlock(x : Float, y : Float, size : Float) : Block(x, y, size){
         //Call this every couple of renders
         //Only shoot in player's direction initially, no homing missles
 
-        spawnBullet(this.x, this.y, 2f , player) //bullets are 1/20th as big as their spawners
+        spawnBullet(this.x, this.y, 5f , player) //bullets are 1/20th as big as their spawners
     }
 
     fun damage(player : Player){ //called by every enemy against the player at every render
@@ -32,4 +32,22 @@ open class DeathBlock(x : Float, y : Float, size : Float) : Block(x, y, size){
         player.enemyBullets.add(bullet)
     }
 
+    fun moveTowardsPlayer(player: Player, speed : Float){ //speed in px/frame
+        //used in MeleeEnemyBlock, can be used by others too!
+
+        var player_before_enemy_x = false //if player comes before enemy in x-coords
+        var player_before_enemy_y = false //if player before enemy in y-coords
+        //edge case same => stay false
+
+        if(player.x < this.x){
+            player_before_enemy_x = true
+        }
+        if(player.y < this.y){
+            player_before_enemy_y = true
+        }
+
+
+
+
+    }
 }

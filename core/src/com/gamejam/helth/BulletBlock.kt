@@ -5,6 +5,10 @@ import com.badlogic.gdx.graphics.Texture
 class BulletBlock(x : Float, y : Float, size : Float,
                   val goal_x : Float, val goal_y : Float, val player: Player) : DeathBlock(x, y, size) {
 
+    init{
+        this.width = size * 2
+    }
+
     val bulletImage = Texture("bullet.png")
 
     var usedBullet = false

@@ -71,7 +71,7 @@ public class MainMenuScreen implements Screen {
 
         if (Gdx.input.isTouched()){
             if (inputTime  == 0 || inputTime > 1) { //delay in seconds
-                game.setScreen(new GameScreen_1(game));
+                game.setScreen(new GameScreen_1(game)); //change to test
                 dispose();
             }
 

@@ -5,12 +5,14 @@ import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.TimeUtils
 
 class EndScreen(val game : Helth) : Screen {
 
     private val camera : OrthographicCamera //Don't need lateinit if set on constructor
     private val deadImage : Texture
+    private val backgroundTexture: TextureRegion
     var TimeScore = 0f;
 
     init{ //constructor
@@ -18,6 +20,8 @@ class EndScreen(val game : Helth) : Screen {
         camera.setToOrtho(false, 2220f, 1080f)
         deadImage = Texture("dead_brocc.png")
         TimeScore = TimeUtils.timeSinceMillis(game.startTime) / 1000f //Time survived in seconds
+
+        backgroundTexture = TextureRegion(Texture("endscreen.jpg"), 0, 0, 2220, 1080)
     }
 
     override fun hide() {
@@ -39,10 +43,9 @@ class EndScreen(val game : Helth) : Screen {
 
 
         game.batch.begin()
-        game.batch.draw(deadImage, 800f, 600f)
-        game.font.draw(game.batch, ":( Ded", 950f, 400f)
+        game.batch.draw(backgroundTexture, 0f,0f)
+        game.batch.draw(deadImage, 1500f, 350f)
         game.font.draw(game.batch, "You survived: $TimeScore seconds!", 450f, 300f)
-        game.font.draw(game.batch, "Tap to play again!", 750f, 200f);
         game.batch.end()
 
         if (Gdx.input.justTouched()){

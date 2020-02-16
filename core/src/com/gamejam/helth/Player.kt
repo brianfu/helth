@@ -142,6 +142,11 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     fun gravity(){
         jumpOrigin = floorHeight
         jumpState = JumpState.DESCENDING
+
+        if (this.y == floorHeight){
+            onPlatformState = OnPlatformState.OFF_PLATFORM
+            jumpState = JumpState.STANDING
+        }
     }
 
     //Background is moving, running by default

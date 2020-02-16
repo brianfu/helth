@@ -41,7 +41,7 @@ public class GameScreen_1 implements Screen {
 
     private Block surface;
     public float floorHeight = 150f;
-    private float platform_width = 600f;
+    private float platform_width = 380f;
 
 
     public GameScreen_1(Helth game) {

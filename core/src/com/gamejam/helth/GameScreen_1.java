@@ -177,7 +177,7 @@ public class GameScreen_1 implements Screen {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
             vegetable.setInputState(Player.InputState.HELD);
-            vegetable.jump(); //TODO: this only works sometimes, no idea why
+            vegetable.jump();
             if (isTouched(0, 0.50f)){
                 vegetable.x -= 300 * Gdx.graphics.getDeltaTime();
             }

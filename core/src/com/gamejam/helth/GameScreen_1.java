@@ -193,11 +193,11 @@ public class GameScreen_1 implements Screen {
             camera.unproject(touchPos);
             vegetable.setInputState(Player.InputState.HELD);
             vegetable.jump();
-            if (isTouched(0, 0.50f)) {
+            if (isTouched(0, 0.50f) || Gdx.input.isKeyPressed(Input.Keys.LEFT) ) {
                 vegetable.x -= 300 * Gdx.graphics.getDeltaTime();
             }
 
-            if (isTouched(0.50f, 1)) {
+            if (isTouched(0.50f, 1) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 vegetable.x += 300 * Gdx.graphics.getDeltaTime();
             }
         } else {

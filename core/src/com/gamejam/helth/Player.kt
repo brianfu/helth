@@ -26,12 +26,24 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     var jumpApex = 0f //jumpHeight + jumpOrigin (lateinit)
     var jumpApexReached = false
 
+    val enemyBullets = ArrayList<BulletBlock>()
+
+    fun enemyBulletsUpdate(){ //call this every render
+        for (ele in enemyBullets){
+            ele.update()
+        }
+    }
+
 
     fun isDead() : Boolean{ //Call every render and do smth if so
         if (health == 0){
             return true
         }
         return false
+    }
+
+    fun death(){
+        //dead brocc
     }
 
     fun canShoot() : Boolean{ //Call every render and do smth if so

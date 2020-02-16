@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.Iterator;
-import java.util.List;
 
 public class GameScreen_1 implements Screen {
 
@@ -21,13 +20,15 @@ public class GameScreen_1 implements Screen {
 
     Texture characterImage;
     Texture platformImage;
+    Texture platform6;
+    Texture platform3;
+    Texture playerImage;
     OrthographicCamera camera;
     Player vegetable;
     Array<Block> platforms;
     long lastDropTime;
     int dropsGathered;
     TextureRegion backgroundTexture;
-    List<Block> collisionChecker;
 
 
     public GameScreen_1(Helth game) {
@@ -37,10 +38,16 @@ public class GameScreen_1 implements Screen {
         characterImage = new Texture("broccoli.png");
 
         backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0,0, 2220, 1080);
+        platform6 = new Texture("platform6.png");
+        platform3 = new Texture("platform3.png");
+        playerImage = new Texture("bucket.png");
+
+        //backgroundTexture = new Texture("plain_background.png");
+        backgroundTexture = new TextureRegion(new Texture("plain_background.jpg"), 0,0, 2220, 1080);
 
         //camera
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 1280, 720);
+        camera.setToOrtho(false, 2220, 1080);
 
         vegetable = new Player(0,0, 5, 100, 10);
         vegetable.x = 0;

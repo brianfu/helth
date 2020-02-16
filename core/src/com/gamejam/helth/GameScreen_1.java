@@ -13,27 +13,28 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.Iterator;
+import java.util.List;
 
 public class GameScreen_1 implements Screen {
 
     final Helth game;
 
-    Texture dropImage;
-    Texture bucketImage;
+    Texture characterImage;
+    Texture platformImage;
     OrthographicCamera camera;
-    Player bucket;
-    Array<Block> raindrops;
+    Player vegetable;
+    Array<Block> platforms;
     long lastDropTime;
     int dropsGathered;
     TextureRegion backgroundTexture;
+    List<Block> collisionChecker;
 
 
     public GameScreen_1(Helth game) {
         this.game = game;
 
-        dropImage = new Texture("block.png");
-        bucketImage = new Texture("bucket.png");
-
+        platformImage = new Texture("block.png");
+        characterImage = new Texture("broccoli.png");
 
         backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0,0, 2220, 1080);
 
@@ -41,25 +42,24 @@ public class GameScreen_1 implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
 
-        //create rectangle to represent bucket
-        bucket = new Player(0,0, 10, 100, 10);
-        bucket.x = 0;
-        bucket.y = 0;
+        vegetable = new Player(0,0, 5, 100, 10);
+        vegetable.x = 0;
+        vegetable.y = 0;
 
-        bucket.width = 64;
-        bucket.height = 64;
+        vegetable.width = 150;
+        vegetable.height = 150;
 
-        raindrops = new Array<>();
-        spawnRaindrops();
+        platforms = new Array<>();
+        spawnPlatforms();
     }
 
-    private void spawnRaindrops() {
-        Block raindrop = new Block(0,0,50);
-        raindrop.x = 1080;
-        raindrop.y = MathUtils.random(500, 1080);
-        raindrop.width = 64;
-        raindrop.height = 64;
-        raindrops.add(raindrop);
+    private void spawnPlatforms() {
+        Block platform = new Block(0,0,50);
+        platform.x = 1080;
+        platform.y = MathUtils.random(200, 800);
+        platform.width = 64;
+        platform.height = 64;
+        platforms.add(platform);
         lastDropTime = TimeUtils.nanoTime();
     }
 
@@ -70,21 +70,26 @@ public class GameScreen_1 implements Screen {
 
     @Override
     public void render(float delta) {
+
+        //getX() => Left Edge,  gety() => Bottom Edge
+
+
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
-        bucket.jumpProcess();
+        vegetable.jumpProcess();
 
         game.batch.setProjectionMatrix(camera.combined);
 
-
         game.batch.begin();
-        game.font.draw(game.batch, "Drops Collected: " + dropsGathered, 0, 480);
         game.batch.draw(backgroundTexture, 0,0 );
-        game.batch.draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
-        for (Rectangle raindrop : raindrops) {
-            game.batch.draw(dropImage, raindrop.x, raindrop.y);
+        game.batch.draw(characterImage, vegetable.x, vegetable.y, vegetable.width, vegetable.height);
+        for (Block platform : platforms) {
+            game.batch.draw(platformImage, platform.x, platform.y);
+            if (vegetable.y > platform.y + platform.height) {
+                vegetable.jumpCollider(platform);
+            }
         }
         game.batch.end();
 
@@ -93,28 +98,21 @@ public class GameScreen_1 implements Screen {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
-            bucket.jump();
+            vegetable.jump();
         }
 
-        if (bucket.x < 0) {
-            bucket.x = 0;
+        if (TimeUtils.nanoTime() - lastDropTime > Integer.MAX_VALUE) {
+            spawnPlatforms();
         }
 
-        if (bucket.x > 800 - 64) {
-            bucket.x = 800 - 64;
-        }
-
-        if (TimeUtils.nanoTime() - lastDropTime > 1000000000) {
-            spawnRaindrops();
-        }
-
-        Iterator<Block> iter = raindrops.iterator();
+        Iterator<Block> iter = platforms.iterator();
         while (iter.hasNext()) {
-            Rectangle raindrop = iter.next();
+            Block raindrop = iter.next();
             raindrop.x -= 200 * Gdx.graphics.getDeltaTime();
-            if (raindrop.x + 150 < 0) {
+            if (raindrop.x + 450 < 0) {
                 iter.remove();
             }
+
         }
 
 
@@ -144,8 +142,8 @@ public class GameScreen_1 implements Screen {
 
     @Override
     public void dispose() {
-        dropImage.dispose();
-        bucketImage.dispose();
+        characterImage.dispose();
+        platformImage.dispose();
 
     }
 }

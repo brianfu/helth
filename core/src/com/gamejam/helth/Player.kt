@@ -44,6 +44,12 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     val enemyBullets = ArrayList<BulletBlock>()
     val usedBullets = ArrayList<BulletBlock>()
 
+    val enemyMeleeEnemies = ArrayList<MeleeEnemyBlock>()
+    val usedMeleeEnemies = ArrayList<MeleeEnemyBlock>() //similar to bullet, except random spawn point
+
+    //empty the used enemy buckets upon every update
+
+
     fun enemyBulletsUpdate(){ //call this every render
         for (ele in enemyBullets){
             ele.update()

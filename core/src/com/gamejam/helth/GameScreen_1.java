@@ -133,6 +133,11 @@ public class GameScreen_1 implements Screen {
         game.batch.draw(enemyImage, enemy.x, enemy.y);
         game.batch.draw(vegetable.characterImage, vegetable.x, vegetable.y, vegetable.width, vegetable.height);
 
+        if (enemy.collision(vegetable, 0f)){
+            vegetable.setHealth(0);
+            vegetable.death();
+        }
+
         for (Block platform : platforms) {
             game.batch.draw(platformImage, platform.x, platform.y);
 

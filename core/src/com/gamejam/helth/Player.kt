@@ -63,6 +63,19 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
         usedBullets.clear()
     }
 
+    fun isDamaged() : Boolean{
+        if (health <= 5){
+            return true
+        }
+        return false
+    }
+
+    fun damage(){
+        if (isDamaged()){
+            characterImage = Texture("damaged_brocc.png")
+        }
+    }
+
 
     fun isDead() : Boolean{ //Call every render and do smth if so
         if (health == 0){
@@ -77,6 +90,7 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
          characterImage = Texture("dead_brocc.png")
         }
     }
+
 
     fun canShoot() : Boolean{ //Call every render and do smth if so
         if (bullets != 0){

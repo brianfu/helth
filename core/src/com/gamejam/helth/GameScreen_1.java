@@ -134,7 +134,7 @@ public class GameScreen_1 implements Screen {
         game.batch.draw(vegetable.characterImage, vegetable.x, vegetable.y, vegetable.width, vegetable.height);
 
         if (enemy.collision(vegetable, 0f)){
-            vegetable.setHealth(0);
+            //vegetable.setHealth(0);
             vegetable.death();
         }
 
@@ -194,8 +194,8 @@ public class GameScreen_1 implements Screen {
             vegetable.x = 0;
         }
 
-        if (vegetable.x > 2075){
-            vegetable.x = 2075;
+        if (vegetable.x > 1500){
+            vegetable.x = 1500;
         }
 
 

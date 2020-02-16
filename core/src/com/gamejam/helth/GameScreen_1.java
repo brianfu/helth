@@ -121,6 +121,7 @@ public class GameScreen_1 implements Screen {
         game.batch.begin();
         game.batch.draw(backgroundTexture, 0, 0);
         game.batch.draw(floorImage, 0,0);
+        game.font.draw(game.batch, "Helth:" + vegetable.getHealth(), 1700f, 1000f);
         game.batch.draw(enemyImage, enemy.x, enemy.y);
         game.batch.draw(vegetable.characterImage, vegetable.x, vegetable.y, vegetable.width, vegetable.height);
 
@@ -177,6 +178,12 @@ public class GameScreen_1 implements Screen {
         if (TimeUtils.nanoTime() - lastShotFired > 2000000000L){
             enemy.shoot(vegetable);
             lastShotFired = TimeUtils.nanoTime();
+        }
+
+
+        if(vegetable.isDead()){
+            game.setScreen(new EndScreen(game));
+            dispose();
         }
 
     }

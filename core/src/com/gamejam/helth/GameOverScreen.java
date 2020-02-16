@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import sun.applet.Main;
 
 
-public class GameOverScreen implements Screen {
+public class GameOverScreen implements Screen { //Depreciated, see EndScreen
 
     final Helth game;
     Texture retryButtonTexture;
@@ -65,7 +65,7 @@ public class GameOverScreen implements Screen {
         game.batch.begin();
 //        game.batch.begin();
 
-        game.font2.draw(game.batch, scoreDisplay, 475, 700);
+        game.font.draw(game.batch, scoreDisplay, 475, 700);
 
         game.font.draw(game.batch, "PRESS ANYWHERE TO RETRY", 570, 400);
 //        retryButton.draw(game.batch, 1);

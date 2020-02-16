@@ -1,9 +1,13 @@
 package com.gamejam.helth
 
+import com.badlogic.gdx.Gdx
+
 open class DeathBlock(x : Float, y : Float, size : Float) : Block(x, y, size){
     //Use this as an enemyblock (fat cells)
 
+
     //Update each enemy's set of bullets
+    var hitsound = Gdx.audio.newSound(Gdx.files.internal("hitsound.ogg"))
 
     fun shoot(player : Player){ //Use the player to find where the bullet should be going
         //Call this every couple of renders
@@ -15,6 +19,8 @@ open class DeathBlock(x : Float, y : Float, size : Float) : Block(x, y, size){
     fun damage(player : Player){ //called by every enemy against the player at every render
         if (this.collision(player)){
             player.health--
+            hitsound.play();
+
         }
         if (player.isDead()){
             player.death()

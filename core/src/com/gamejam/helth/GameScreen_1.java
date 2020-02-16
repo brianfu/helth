@@ -33,6 +33,8 @@ public class GameScreen_1 implements Screen {
 
         dropImage = new Texture("block.png");
         bucketImage = new Texture("bucket.png");
+
+
         backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0,0, 2220, 1080);
 
         //camera

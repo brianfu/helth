@@ -90,6 +90,7 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
 
     fun jumpCollider(block : Block){ //Call in GameScreen after jumpProcess
         //Loop through all blocks in GameScreen, check for collisions, if any, stop descending the jump
+        this.gravity()
         if (this.collision(block, 2f)){ //if collided with a floor
             jumpState = JumpState.STANDING //stop falling
         }

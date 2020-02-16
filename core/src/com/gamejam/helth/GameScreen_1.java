@@ -29,6 +29,9 @@ public class GameScreen_1 implements Screen {
     int dropsGathered;
     TextureRegion backgroundTexture;
 
+    private Boolean isOnPlatform = false;
+    private Block surface;
+
 
     public GameScreen_1(Helth game) {
         this.game = game;
@@ -48,7 +51,7 @@ public class GameScreen_1 implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 2220, 1080);
 
-        vegetable = new Player(0, 0, 5, 100, 10);
+        vegetable = new Player(0, 0, 10, 100, 10);
         vegetable.x = 0;
         vegetable.y = 0;
 
@@ -60,7 +63,7 @@ public class GameScreen_1 implements Screen {
     }
 
     private void spawnPlatforms() {
-        GroundBlock platform = new GroundBlock(0,0,800, 100);
+        GroundBlock platform = new GroundBlock(0,0,700, 100);
         platform.x = 1080;
         platform.y = MathUtils.random(200, 800);
         platforms.add(platform);
@@ -94,6 +97,8 @@ public class GameScreen_1 implements Screen {
 //            }
             if (vegetable.y > platform.y + 15) {
                 vegetable.jumpCollider(platform);
+                surface = platform;
+                isOnPlatform = true;
             }
 
         }
@@ -107,7 +112,7 @@ public class GameScreen_1 implements Screen {
             vegetable.jump();
         }
 
-        if (TimeUtils.nanoTime() - lastDropTime > Integer.MAX_VALUE) {
+        if (TimeUtils.nanoTime() - lastDropTime > 8000000000L) {
             spawnPlatforms();
         }
 

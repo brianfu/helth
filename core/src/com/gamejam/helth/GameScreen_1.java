@@ -61,6 +61,8 @@ public class GameScreen_1 implements Screen {
         bgm.play();
 
         deathSound = Gdx.audio.newSound(Gdx.files.internal("death_sound.wav"));
+
+
         //backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0, 0, 2220, 1080);
         //platform6 = new Texture("platform6.png");
         //platform3 = new Texture("platform3.png");
@@ -228,6 +230,7 @@ public class GameScreen_1 implements Screen {
 
         if (vegetable.isDead()) {
             game.setScreen(new EndScreen(game));
+            deathSound.play();
             dispose();
         }
 

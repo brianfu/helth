@@ -1,6 +1,7 @@
 package com.gamejam.helth
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.Actor
 
@@ -10,12 +11,13 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     var hitsound = Gdx.audio.newSound(Gdx.files.internal("jump_sound.wav"))
     init{ //Secondary Constructor
         this.setPosition(x,y) //xy-coord at left bottom point
-
     }
 
     lateinit internal var characterImage : Texture //set in gameScreen
 
     internal var floorHeight = 150f;
+
+    internal var collideSound =  Gdx.audio.newSound(Gdx.files.internal("collide.mp3"))
 
     //Jump
     enum class JumpState{
@@ -87,7 +89,7 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     fun death(){
         //dead brocc
         if (isDead()){
-         characterImage = Texture("dead_brocc.png")
+            characterImage = Texture("dead_brocc.png")
         }
     }
 
@@ -158,15 +160,19 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
         }
     }
 
+
+
     fun jumpCollider(block : GroundBlock){ //Call in GameScreen after jumpProcess
         //Loop through all blocks in GameScreen, check for collisions, if any, stop descending the jump
         if (block.collision(this, 2f)){ //if collided with a floor
             jumpState = JumpState.STANDING //stop falling
 
             if (onPlatformState == OnPlatformState.BETWEEN_PLATFORMS){
+                collideSound.play(1f)
                 onPlatformState = OnPlatformState.ON_PLATFORM
             }
             else if (onPlatformState == OnPlatformState.OFF_PLATFORM){
+                collideSound.play(1f)
                 onPlatformState = OnPlatformState.ON_PLATFORM
             }
         }

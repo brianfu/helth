@@ -231,6 +231,7 @@ public class GameScreen_1 implements Screen {
 
         if (vegetable.isDead()) {
             game.setScreen(new EndScreen(game, timeSeconds));
+            deathSound.play(1f);
             dispose();
         }
 

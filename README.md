@@ -13,7 +13,8 @@ You have just been eaten by someone who is not-so-"helth"-y. Being a broccoli, y
 Touch and hold the screen to perform a full jump. Quick tap the screen to perform a shorter jump.
 If you jump on a fatty solid, you can use it as a platform, to either avoid bullets or jump to other fatty solids.
 However, if YOU get hit by a fatty solid, you will be stuck in it for the duration it moves past you. Jump to wiggle free!
--On Desktop, press the space bar instead of the screen
+
+--On Desktop, press the space bar instead of the screen
 
 Avoid getting hit by fat particles at all costs.
 You have 10 lives. How long can YOU survive?

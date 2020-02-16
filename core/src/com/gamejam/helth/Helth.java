@@ -23,7 +23,7 @@ public class Helth extends Game {
     public void create() {
         batch = new SpriteBatch();
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("helvetica.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("BebasNeue-Regular.ttf"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = fontsize;
         font = generator.generateFont(parameter); // font size 12 pixels

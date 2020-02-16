@@ -44,6 +44,7 @@ public class GameScreen_1 implements Screen {
 
     DeathBlock enemy;
     Texture enemyImage;
+    MeleeEnemyBlock meleeEnemy;
 
     private Block surface;
     public float floorHeight = 150f;
@@ -81,6 +82,9 @@ public class GameScreen_1 implements Screen {
 
         vegetable.width = 150;
         vegetable.height = 150;
+
+        meleeEnemy = new MeleeEnemyBlock(2000, floorHeight, 20f, vegetable, 3f);
+        //TODO: Change size of bucket
 
         platforms = new Array<>();
         spawnPlatforms();
@@ -128,18 +132,20 @@ public class GameScreen_1 implements Screen {
         vegetable.jumpProcess();
 
         vegetable.enemyBulletsUpdate();
+        meleeEnemy.moveAround();
 
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
         game.batch.draw(backgroundTexture, 0, 0);
         game.batch.draw(floorImage, 0, 0);
+        game.batch.draw(meleeEnemy.getMeleeEnemyImage(), meleeEnemy.x, meleeEnemy.y);
         game.font.draw(game.batch, "Helth:" + vegetable.getHealth(), 1700f, 1000f);
         game.batch.draw(enemyImage, enemy.x, enemy.y);
         game.batch.draw(vegetable.characterImage, vegetable.x, vegetable.y, vegetable.width, vegetable.height);
 
         if (enemy.collision(vegetable, 0f)){
-            vegetable.setHealth(0);
+            vegetable.setHealth(0); //TODO: uncomment
             vegetable.death();
         }
 
@@ -199,8 +205,8 @@ public class GameScreen_1 implements Screen {
             vegetable.x = 0;
         }
 
-        if (vegetable.x > 1500){
-            vegetable.x = 1500;
+        if (vegetable.x > 2000){
+            vegetable.x = 2000;
         }
 
 

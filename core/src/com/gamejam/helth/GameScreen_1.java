@@ -257,6 +257,7 @@ public class GameScreen_1 implements Screen {
     public void dispose() {
         vegetable.characterImage.dispose();
         platformImage.dispose();
+        bgm.dispose();
 
 
     }

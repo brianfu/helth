@@ -205,8 +205,8 @@ public class GameScreen_1 implements Screen {
             vegetable.x = 0;
         }
 
-        if (vegetable.x > 1500){
-            vegetable.x = 1500;
+        if (vegetable.x > 2000){
+            vegetable.x = 2000;
         }
 
 

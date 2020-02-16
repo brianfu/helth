@@ -21,7 +21,7 @@ class EndScreen(val game : Helth) : Screen {
         deadImage = Texture("dead_brocc.png")
         TimeScore = TimeUtils.timeSinceMillis(game.startTime) / 1000f //Time survived in seconds
 
-        backgroundTexture = TextureRegion(Texture("endscreen.jpg"), 0, 0, 2220, 1080)
+        backgroundTexture = TextureRegion(Texture("endscreen.png"), 0, 0, 2220, 1080)
     }
 
     override fun hide() {
@@ -45,7 +45,8 @@ class EndScreen(val game : Helth) : Screen {
         game.batch.begin()
         game.batch.draw(backgroundTexture, 0f,0f)
         game.batch.draw(deadImage, 1500f, 350f)
-        game.font.draw(game.batch, "You survived: $TimeScore seconds!", 450f, 300f)
+        game.font.draw(game.batch, "You survived: $TimeScore seconds!", 550f, 400f)
+        game.font.draw(game.batch, "Press to play again!", 700f, 300f)
         game.batch.end()
 
         if (Gdx.input.justTouched()){

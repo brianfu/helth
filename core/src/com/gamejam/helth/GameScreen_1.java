@@ -20,7 +20,7 @@ public class GameScreen_1 implements Screen {
     Texture dropImage;
     Texture bucketImage;
     OrthographicCamera camera;
-    Rectangle bucket;
+    Player bucket;
     Array<Rectangle> raindrops;
     long lastDropTime;
     int dropsGathered;
@@ -39,7 +39,7 @@ public class GameScreen_1 implements Screen {
         camera.setToOrtho(false, 1280, 720);
 
         //create rectangle to represent bucket
-        bucket = new Rectangle();
+        bucket = new Player(0,0, 10, 100, 10);
         bucket.x = 0;
         bucket.y = 0;
 
@@ -71,6 +71,7 @@ public class GameScreen_1 implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
+        bucket.jumpProcess();
 
         game.batch.setProjectionMatrix(camera.combined);
 
@@ -88,7 +89,7 @@ public class GameScreen_1 implements Screen {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
-            bucket.y = touchPos.y;
+            bucket.jump();
         }
 
         if (bucket.x < 0) {

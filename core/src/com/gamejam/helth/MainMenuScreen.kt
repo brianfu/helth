@@ -31,7 +31,7 @@ class MainMenuScreen(val game: Helth) : Screen {
         game.batch.draw(backgroundTexture, 0f, 0f, 2220f, 1080f)
         game.batch.end()
         if (Gdx.input.justTouched()) {
-            game.startTime = TimeUtils.millis()
+//            game.startTime = TimeUtils.millis()
             game.screen = GameScreen_1(game)
             dispose()
         }

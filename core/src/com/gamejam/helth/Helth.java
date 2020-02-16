@@ -17,7 +17,7 @@ public class Helth extends Game {
     //BitmapFont font2;
 
     public int fontsize = 100;
-    public long startTime;
+//    public long startTime;
 
     @Override
     public void create() {
@@ -32,7 +32,7 @@ public class Helth extends Game {
         //font = new BitmapFont();
         font.getData().setScale(1);
         font.setColor(Color.BLACK);
-        startTime = TimeUtils.millis();
+//        startTime = TimeUtils.millis();
         this.setScreen(new MainMenuScreen(this));
     }
 

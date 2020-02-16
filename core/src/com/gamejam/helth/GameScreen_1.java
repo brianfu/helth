@@ -139,7 +139,7 @@ public class GameScreen_1 implements Screen {
         game.batch.draw(vegetable.characterImage, vegetable.x, vegetable.y, vegetable.width, vegetable.height);
 
         if (enemy.collision(vegetable, 0f)){
-            //vegetable.setHealth(0);
+            vegetable.setHealth(0);
             vegetable.death();
         }
 

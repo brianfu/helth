@@ -7,9 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 class Player(x : Float, y : Float, size : Float, var health : Int, var bullets : Int) : Block(x, y, size) {
 
     //getX() => Left Edge,  gety() => Bottom Edge
-
+    var hitsound = Gdx.audio.newSound(Gdx.files.internal("jump_sound.wav"))
     init{ //Secondary Constructor
         this.setPosition(x,y) //xy-coord at left bottom point
+
     }
 
     lateinit internal var characterImage : Texture //set in gameScreen
@@ -91,6 +92,8 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     fun jump(){ //Call this in CODE (not render) to make it jump
         if (jumpState == JumpState.STANDING) {
 
+
+            hitsound.play();
             //onPlatformState == OnPlatformState.OFF_PLATFORM
             jumpState = JumpState.ASCENDING
             jumpOrigin = this.y  //Bottom of hitbox

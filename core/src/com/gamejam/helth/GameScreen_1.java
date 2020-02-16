@@ -34,7 +34,10 @@ public class GameScreen_1 implements Screen {
     GroundBlock floor;
     long lastDropTime;
     long lastShotFired;
+
     Music bgm;
+    Sound deathSound;
+
     //long lastEnemyDisappear;
     //int dropsGathered;
     TextureRegion backgroundTexture;
@@ -55,6 +58,8 @@ public class GameScreen_1 implements Screen {
         bgm.setLooping(true);
         bgm.setVolume(0.4f);
         bgm.play();
+
+        deathSound = Gdx.audio.newSound(Gdx.files.internal("death_sound.wav"));
         //backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0, 0, 2220, 1080);
         //platform6 = new Texture("platform6.png");
         //platform3 = new Texture("platform3.png");
@@ -172,7 +177,7 @@ public class GameScreen_1 implements Screen {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
             vegetable.setInputState(Player.InputState.HELD);
-            vegetable.jump(); //TODO: this only works sometimes, no idea why
+            vegetable.jump();
             if (isTouched(0, 0.50f)){
                 vegetable.x -= 300 * Gdx.graphics.getDeltaTime();
             }
@@ -220,6 +225,7 @@ public class GameScreen_1 implements Screen {
 
         if (vegetable.isDead()) {
             game.setScreen(new EndScreen(game));
+            deathSound.play();
             dispose();
         }
 

@@ -6,8 +6,8 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
 
     //getX() => Left Edge,  gety() => Bottom Edge, getTop() => Top Edge
 
-    init{
-        this.setPosition(x,y) //maybe use setBounds
+    init{ //Secondary Constructor
+        this.setPosition(x,y) //xy-coord at left bottom point
     }
 
 
@@ -66,6 +66,9 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
         else if (jumpState == JumpState.DESCENDING){
             if(this.y > jumpOrigin){
                 this.y -= jumpSpeed
+            }
+            else{
+                jumpState = JumpState.STANDING
             }
         }
     }

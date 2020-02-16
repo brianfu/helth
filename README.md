@@ -11,9 +11,10 @@ You have just been eaten by someone who is not-so-"helth"-y. Being a broccoli, y
 **Instructions**
 
 Touch and hold the screen to perform a full jump. Quick tap the screen to perform a shorter jump.
+Tap the left side of the screen to jump leftwards, tap the right side of the screen to jump rightwards
 If you jump on a fatty solid, you can use it as a platform, to either avoid bullets or jump to other fatty solids.
 
---On Desktop, press the space bar instead of the screen
+--On Desktop, press the space bar instead of the screen, and use the left and right arrow keys to modify the lean of your jump
 
 There's an evil cholesterol running around the stage. It wants your brains.
 

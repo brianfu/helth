@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -37,19 +36,19 @@ public class GameScreen_1 implements Screen {
         platformImage = new Texture("block.png");
         characterImage = new Texture("broccoli.png");
 
-        backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0,0, 2220, 1080);
+        backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0, 0, 2220, 1080);
         platform6 = new Texture("platform6.png");
         platform3 = new Texture("platform3.png");
         playerImage = new Texture("bucket.png");
 
         //backgroundTexture = new Texture("plain_background.png");
-        backgroundTexture = new TextureRegion(new Texture("plain_background.jpg"), 0,0, 2220, 1080);
+        backgroundTexture = new TextureRegion(new Texture("plain_background.jpg"), 0, 0, 2220, 1080);
 
         //camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 2220, 1080);
 
-        vegetable = new Player(0,0, 5, 100, 10);
+        vegetable = new Player(0, 0, 5, 100, 10);
         vegetable.x = 0;
         vegetable.y = 0;
 
@@ -76,9 +75,6 @@ public class GameScreen_1 implements Screen {
     @Override
     public void render(float delta) {
 
-        //getX() => Left Edge,  gety() => Bottom Edge
-
-
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -88,13 +84,18 @@ public class GameScreen_1 implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        game.batch.draw(backgroundTexture, 0,0 );
+        game.batch.draw(backgroundTexture, 0, 0);
         game.batch.draw(characterImage, vegetable.x, vegetable.y, vegetable.width, vegetable.height);
         for (Block platform : platforms) {
             game.batch.draw(platformImage, platform.x, platform.y);
-            if (vegetable.y > platform.y + platform.height) {
+
+//            if (vegetable.y != 0 && vegetable.getJumpState() == Player.JumpState.STANDING) {
+//                vegetable.gravity();
+//            }
+            if (vegetable.y > platform.y + 15) {
                 vegetable.jumpCollider(platform);
             }
+
         }
         game.batch.end();
 

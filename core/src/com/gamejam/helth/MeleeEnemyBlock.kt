@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture
 
 class MeleeEnemyBlock(x : Float, y : Float, size : Float,
                       val player : Player,
-                      var speed : Float = 5f)
+                      var speed : Float)
     : DeathBlock(x, y, size){
     //speed the enemy moves at
     //spawn a single one of these, starting at the bottom left corner of screen

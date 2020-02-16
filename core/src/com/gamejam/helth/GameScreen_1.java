@@ -83,7 +83,7 @@ public class GameScreen_1 implements Screen {
         vegetable.width = 150;
         vegetable.height = 150;
 
-        meleeEnemy = new MeleeEnemyBlock(2000, floorHeight, 20f, vegetable, 3f);
+        meleeEnemy = new MeleeEnemyBlock(2000, floorHeight, 20f, vegetable, 5f); //20f for gameplay
         //TODO: Change size of bucket
 
         platforms = new Array<>();
@@ -223,6 +223,7 @@ public class GameScreen_1 implements Screen {
             enemy.shoot(vegetable);
             lastShotFired = TimeUtils.nanoTime();
         }
+
 
 
         if (vegetable.isDead()) {

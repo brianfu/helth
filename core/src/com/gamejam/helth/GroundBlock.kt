@@ -14,7 +14,7 @@ class GroundBlock(x : Float, y : Float, width : Float, height : Float) : Block(x
 
 
         //Make a slightly bigger rectangle and check if it overlaps
-        val testRec = GroundBlock(this.x, this.y + 190, this.width, this.height) //copy construct
+        val testRec = GroundBlock(this.x, this.y + 210, this.width, this.height) //copy construct
 //        testRec.setSize(testRec.width + collisionRadius, testRec.height + collisionRadius)
         testRec.setSize(testRec.width + collisionRadius, testRec.height + collisionRadius)
 

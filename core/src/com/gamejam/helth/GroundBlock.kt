@@ -11,13 +11,13 @@ class GroundBlock(x : Float, y : Float, width : Float, height : Float) : Block(x
 
     //Use this to find if floor is "solid" or not
     override fun collision(block : Block, collisionRadius : Float) : Boolean{ //collusionRadius in pixels
-        if (this.overlaps(block)){ //lazy eval
-            return true
-        }
+
 
         //Make a slightly bigger rectangle and check if it overlaps
-        val testRec = GroundBlock(this.x, this.y, this.width, this.height) //copy construct
+        val testRec = GroundBlock(this.x, this.y + 190, this.width, this.height) //copy construct
+//        testRec.setSize(testRec.width + collisionRadius, testRec.height + collisionRadius)
         testRec.setSize(testRec.width + collisionRadius, testRec.height + collisionRadius)
+
 
         if (testRec.overlaps(block)){
             return true

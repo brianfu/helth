@@ -29,7 +29,7 @@ public class GameScreen_1 implements Screen {
     //Texture playerImage;
     OrthographicCamera camera;
     Player vegetable;
-    Array<Block> platforms;
+    Array<GroundBlock> platforms;
     Array<DeathBlock> enemies;
     GroundBlock floor;
     long lastDropTime;
@@ -143,7 +143,7 @@ public class GameScreen_1 implements Screen {
             vegetable.death();
         }
 
-        for (Block platform : platforms) {
+        for (GroundBlock platform : platforms) {
             game.batch.draw(platformImage, platform.x, platform.y);
 
 //            if (vegetable.y != 0 && vegetable.getJumpState() == Player.JumpState.STANDING) {
@@ -207,7 +207,7 @@ public class GameScreen_1 implements Screen {
         if (TimeUtils.nanoTime() - lastDropTime > 2000000000L) {
             spawnPlatforms();
         }
-        Iterator<Block> iter = platforms.iterator();
+        Iterator<GroundBlock> iter = platforms.iterator();
         while (iter.hasNext()) {
             Block raindrop = iter.next();
             raindrop.x -= 500 * Gdx.graphics.getDeltaTime();
@@ -225,7 +225,6 @@ public class GameScreen_1 implements Screen {
 
         if (vegetable.isDead()) {
             game.setScreen(new EndScreen(game));
-            deathSound.play();
             dispose();
         }
 

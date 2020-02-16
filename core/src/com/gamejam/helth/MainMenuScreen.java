@@ -23,6 +23,7 @@ public class MainMenuScreen implements Screen {
 
     final Helth game;
     float inputTime = 0;
+    TextureRegion backgroundTexture;
 //    Texture playButtonTexture;
 //    TextureRegion playButtonTextureRegion;
 //    ImageButton playButton;
@@ -41,6 +42,8 @@ public class MainMenuScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
+
+        backgroundTexture = new TextureRegion(new Texture("mainmenu.jpg"), 0,0, 2220, 1080);
     }
 
     @Override
@@ -60,11 +63,12 @@ public class MainMenuScreen implements Screen {
 //
 //        playButton.setSize(100, 100);
         game.batch.begin();
-        game.font.draw(game.batch, "HELTH", 750, 700);
-        game.font.draw(game.batch, "PRESS ANYWHERE TO START", 570, 400);
-
-
+        game.batch.draw(backgroundTexture, 0,0 );
+//        game.font.draw(game.batch, "HELTH", 750, 700);
+//        game.font.draw(game.batch, "PRESS ANYWHERE TO START", 570, 400);
         game.batch.end();
+
+
         if (Gdx.input.isTouched()){
             if (inputTime  == 0 || inputTime > 1) { //delay in seconds
                 game.setScreen(new GameScreen_1(game));

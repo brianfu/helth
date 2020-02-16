@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -21,9 +22,10 @@ public class GameScreen_1 implements Screen {
     Texture bucketImage;
     OrthographicCamera camera;
     Player bucket;
-    Array<Rectangle> raindrops;
+    Array<Block> raindrops;
     long lastDropTime;
     int dropsGathered;
+    TextureRegion backgroundTexture;
 
 
     public GameScreen_1(Helth game) {
@@ -31,8 +33,7 @@ public class GameScreen_1 implements Screen {
 
         dropImage = new Texture("droplet.png");
         bucketImage = new Texture("bucket.png");
-
-        //omit sound for now
+        backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0,0, 2220, 1080);
 
         //camera
         camera = new OrthographicCamera();
@@ -51,11 +52,11 @@ public class GameScreen_1 implements Screen {
     }
 
     private void spawnRaindrops() {
-        Rectangle raindrop = new Rectangle();
+        Block raindrop = new Block(0,0,50);
         raindrop.x = 800;
-        raindrop.y = MathUtils.random(96, 400);
-        raindrop.width = 64;
-        raindrop.height = 64;
+        raindrop.y = MathUtils.random(0, 480);
+        raindrop.width = 100f;
+        raindrop.height = 100f;
         raindrops.add(raindrop);
         lastDropTime = TimeUtils.nanoTime();
     }
@@ -78,6 +79,7 @@ public class GameScreen_1 implements Screen {
 
         game.batch.begin();
         game.font.draw(game.batch, "Drops Collected: " + dropsGathered, 0, 480);
+        game.batch.draw(backgroundTexture, 0,0 );
         game.batch.draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
         for (Rectangle raindrop : raindrops) {
             game.batch.draw(dropImage, raindrop.x, raindrop.y);
@@ -104,15 +106,11 @@ public class GameScreen_1 implements Screen {
             spawnRaindrops();
         }
 
-        Iterator<Rectangle> iter = raindrops.iterator();
+        Iterator<Block> iter = raindrops.iterator();
         while (iter.hasNext()) {
             Rectangle raindrop = iter.next();
             raindrop.x -= 200 * Gdx.graphics.getDeltaTime();
             if (raindrop.x < 0) {
-                iter.remove();
-            }
-            if (raindrop.overlaps(bucket)) {
-                dropsGathered++;
                 iter.remove();
             }
         }

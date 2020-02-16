@@ -17,8 +17,8 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     }
 
 
-    val jumpSpeed = 2f //jump by 2 px each frame
-    var jumpHeight = 10f //# of px to jump by, change in main
+    val jumpSpeed = 20f //jump by 2 px each frame
+    var jumpHeight = 100f //# of px to jump by, change in main
 
     var jumpState = JumpState.STANDING
     var jumpOrigin = 0f //y-coord (this.top) of where the jump started (lateinit)

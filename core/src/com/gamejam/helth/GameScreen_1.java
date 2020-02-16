@@ -3,6 +3,8 @@ package com.gamejam.helth;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -33,6 +35,7 @@ public class GameScreen_1 implements Screen {
     GroundBlock floor;
     long lastDropTime;
     long lastShotFired;
+    Music bgm;
     //long lastEnemyDisappear;
     //int dropsGathered;
     TextureRegion backgroundTexture;
@@ -49,7 +52,10 @@ public class GameScreen_1 implements Screen {
         this.game = game;
 
         platformImage = new Texture("block.png");
-
+        bgm = Gdx.audio.newMusic(Gdx.files.internal("Helth_Game_BGM.ogg"));
+        bgm.setLooping(true);
+        bgm.setVolume(0.4f);
+        bgm.play();
         //backgroundTexture = new TextureRegion(new Texture("firstscreen.jpg"), 0, 0, 2220, 1080);
         //platform6 = new Texture("platform6.png");
         //platform3 = new Texture("platform3.png");
@@ -108,6 +114,7 @@ public class GameScreen_1 implements Screen {
     private Vector2 centerTest = new Vector2();
     @Override
     public void render(float delta) {
+
 
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -216,6 +223,7 @@ public class GameScreen_1 implements Screen {
     public void dispose() {
         vegetable.characterImage.dispose();
         platformImage.dispose();
+
 
     }
 }

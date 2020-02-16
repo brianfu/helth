@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 
 class Player(x : Float, y : Float, size : Float, var health : Int, var bullets : Int) : Block(x, y, size) {
 
-    //getX() => Left Edge,  gety() => Bottom Edge, getTop() => Top Edge
+    //getX() => Left Edge,  gety() => Bottom Edge
 
     init{ //Secondary Constructor
         this.setPosition(x,y) //xy-coord at left bottom point
@@ -26,14 +26,14 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
     var jumpApexReached = false
 
 
-    fun isDead() : Boolean{
+    fun isDead() : Boolean{ //Call every render and do smth if so
         if (health == 0){
             return true
         }
         return false
     }
 
-    fun canShoot() : Boolean{
+    fun canShoot() : Boolean{ //Call every render and do smth if so
         if (bullets != 0){
             return true
         }
@@ -79,25 +79,6 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
             jumpState = JumpState.STANDING //stop falling
         }
     }
-
-//    fun jump(height : Float, speed: Float){ //height is how high to jump (and how much to lower after jump)
-//        // speed is how fast to jump
-//        //simply call this in main render loop and everything should work
-//
-//        val jumpHeight = height + this.top
-//
-//        var topReached = false //If jump has reached the apex
-//        if (this.top < jumpHeight && !topReached){ //if not finished jumping up
-//            this.moveBy(0f, 2f) //jump by 2 px at a time
-//        }else{ //elif top >= jumpHeight
-//            topReached = true
-//        }
-//
-//        if(topReached){
-//            this.moveBy(0f, -2f)
-//        }
-//
-//    }
 
     //Background is moving, running by default
 

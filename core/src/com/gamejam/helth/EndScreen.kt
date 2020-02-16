@@ -8,18 +8,18 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.TimeUtils
 
-class EndScreen(val game : Helth) : Screen {
+class EndScreen(val game : Helth, val time: Float  ) : Screen {
 
     private val camera : OrthographicCamera //Don't need lateinit if set on constructor
     private val deadImage : Texture
     private val backgroundTexture: TextureRegion
-    var TimeScore = 0f;
+    val TimeScore = time;
 
     init{ //constructor
         camera = OrthographicCamera()
         camera.setToOrtho(false, 2220f, 1080f)
         deadImage = Texture("dead_brocc.png")
-        TimeScore = TimeUtils.timeSinceMillis(game.startTime) / 1000f //Time survived in seconds
+//        TimeScore = TimeUtils.timeSinceMillis(game.startTime) / 1000f //Time survived in seconds
 
         backgroundTexture = TextureRegion(Texture("endscreen.png"), 0, 0, 2220, 1080)
     }
@@ -45,7 +45,7 @@ class EndScreen(val game : Helth) : Screen {
         game.batch.begin()
         game.batch.draw(backgroundTexture, 0f,0f)
         game.batch.draw(deadImage, 1500f, 350f)
-        game.font.draw(game.batch, "You survived: $TimeScore seconds!", 550f, 400f)
+        game.font.draw(game.batch, "You survived: ${two_dec(TimeScore)} seconds!", 550f, 400f)
         game.font.draw(game.batch, "Press to play again!", 700f, 300f)
         game.batch.end()
 
@@ -53,6 +53,12 @@ class EndScreen(val game : Helth) : Screen {
             game.screen = MainMenuScreen(game)
             dispose()
         }
+    }
+
+    fun two_dec( x : Float) : Float{
+        var res = (x * 100).toInt()
+        var res2 = res / 100f
+        return res2
     }
 
     override fun pause() {

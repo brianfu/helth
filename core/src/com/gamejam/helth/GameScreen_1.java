@@ -42,6 +42,7 @@ public class GameScreen_1 implements Screen {
     //int dropsGathered;
     TextureRegion backgroundTexture;
 
+    float timeSeconds;
     DeathBlock enemy;
     Texture enemyImage;
     MeleeEnemyBlock meleeEnemy;
@@ -53,7 +54,7 @@ public class GameScreen_1 implements Screen {
 
     public GameScreen_1(Helth game) {
         this.game = game;
-
+        timeSeconds = 0f;
         platformImage = new Texture("block.png");
         bgm = Gdx.audio.newMusic(Gdx.files.internal("Helth_Game_BGM.ogg"));
         bgm.setLooping(true);
@@ -126,7 +127,7 @@ public class GameScreen_1 implements Screen {
     @Override
     public void render(float delta) {
 
-
+        timeSeconds +=Gdx.graphics.getRawDeltaTime();
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -229,8 +230,7 @@ public class GameScreen_1 implements Screen {
 
 
         if (vegetable.isDead()) {
-            game.setScreen(new EndScreen(game));
-            deathSound.play();
+            game.setScreen(new EndScreen(game, timeSeconds));
             dispose();
         }
 

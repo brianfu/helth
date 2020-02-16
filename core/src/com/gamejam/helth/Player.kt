@@ -2,12 +2,12 @@ package com.gamejam.helth
 
 import com.badlogic.gdx.scenes.scene2d.Actor
 
-class Player(x : Float, y : Float, size : Float, var health : Int, var bullets : Int) : Actor() {
+class Player(x : Float, y : Float, size : Float, var health : Int, var bullets : Int) : Block(x, y, size) {
 
     //getX() => Left Edge,  gety() => Bottom Edge, getTop() => Top Edge
 
     init{
-        this.setOrigin(x,y) //maybe use setBounds
+        this.setPosition(x,y) //maybe use setBounds
     }
 
 
@@ -16,12 +16,13 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
         STANDING, ASCENDING, DESCENDING
     }
 
-    var jumpState = JumpState.STANDING
-    val jumpSpeed = 2f //jump by 2 px each frame
 
-    var jumpOrigin = 0f //y-coord (this.top) of where the jump started
+    val jumpSpeed = 2f //jump by 2 px each frame
     var jumpHeight = 10f //# of px to jump by, change in main
-    var jumpApex = 0f //jumpHeight + jumpOrigin
+
+    var jumpState = JumpState.STANDING
+    var jumpOrigin = 0f //y-coord (this.top) of where the jump started (lateinit)
+    var jumpApex = 0f //jumpHeight + jumpOrigin (lateinit)
     var jumpApexReached = false
 
 
@@ -50,20 +51,29 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
         jumpApexReached = false //reset it
     }
 
-    fun jumpProcess(jumpState : JumpState){ //Call this constantly in render
+    fun jumpProcess(){ //Call this constantly in render
         if (jumpState == JumpState.STANDING){
             return
         }
         else if (jumpState == JumpState.ASCENDING){
             if (this.y < jumpApex){
                 this.y += jumpSpeed
-            }else{ //delays descention by 2 frames
-
             }
-
+            else{ //delays descention by a frame, should be fine
+                jumpState = JumpState.DESCENDING
+            }
         }
         else if (jumpState == JumpState.DESCENDING){
+            if(this.y > jumpOrigin){
+                this.y -= jumpSpeed
+            }
+        }
+    }
 
+    fun jumpCollider(block : Block){ //Call in GameScreen after jumpProcess
+        //Loop through all blocks in GameScreen, check for collisions, if any, stop descending the jump
+        if (this.collision(block)){ //if collided with a floor
+            jumpState = JumpState.STANDING //stop falling
         }
     }
 

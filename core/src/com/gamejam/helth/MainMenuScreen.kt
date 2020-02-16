@@ -16,7 +16,7 @@ class MainMenuScreen(val game: Helth) : Screen {
     init {
         camera = OrthographicCamera()
         camera.setToOrtho(false, 2220f, 1080f)
-        backgroundTexture = Texture("mainmenu.jpg")
+        backgroundTexture = Texture("mainmenu.png")
     }
 
     override fun show() {}
@@ -29,6 +29,7 @@ class MainMenuScreen(val game: Helth) : Screen {
 
         game.batch.begin()
         game.batch.draw(backgroundTexture, 0f, 0f, 2220f, 1080f)
+        game.font.draw(game.batch, "Press anywhere to play!", 700f, 350f)
         game.batch.end()
         if (Gdx.input.justTouched()) {
 //            game.startTime = TimeUtils.millis()

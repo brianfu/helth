@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle
 open class Block(x : Float, y : Float, val size : Float) : Rectangle(x, y, size, size) { //size of block in pixels, block is perfect square
 
     //Use this to find if floor is "solid" or not
-    fun collision(block : Block, collisionRadius : Float = 2f) : Boolean{ //collusionRadius in pixels
+    open fun collision(block : Block, collisionRadius : Float = 2f) : Boolean{ //collusionRadius in pixels
         if (this.overlaps(block)){ //lazy eval
             return true
         }

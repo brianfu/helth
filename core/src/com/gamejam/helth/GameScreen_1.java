@@ -61,11 +61,9 @@ public class GameScreen_1 implements Screen {
     }
 
     private void spawnPlatforms() {
-        Block platform = new Block(0,0,50);
+        GroundBlock platform = new GroundBlock(0,0,800, 100);
         platform.x = 1080;
         platform.y = MathUtils.random(200, 800);
-        platform.width = 64;
-        platform.height = 64;
         platforms.add(platform);
         lastDropTime = TimeUtils.nanoTime();
     }

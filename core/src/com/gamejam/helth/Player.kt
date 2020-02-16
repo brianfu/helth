@@ -19,7 +19,7 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
 
 
     val jumpSpeed = 20f //jump by 2 px each frame
-    var jumpHeight = 300f //# of px to jump by, change in main
+    var jumpHeight = 800f //# of px to jump by, change in main
 
     var jumpState = JumpState.STANDING
     var jumpOrigin = 0f //y-coord (this.top) of where the jump started (lateinit)
@@ -90,9 +90,14 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
 
     fun jumpCollider(block : Block){ //Call in GameScreen after jumpProcess
         //Loop through all blocks in GameScreen, check for collisions, if any, stop descending the jump
-        if (this.collision(block)){ //if collided with a floor
+        if (this.collision(block, 2f)){ //if collided with a floor
             jumpState = JumpState.STANDING //stop falling
         }
+    }
+
+    fun gravity(){
+        jumpOrigin = 0f
+        jumpState = JumpState.DESCENDING
     }
 
     //Background is moving, running by default

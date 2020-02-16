@@ -2,10 +2,15 @@ package com.gamejam.helth
 
 import com.badlogic.gdx.math.Rectangle
 
-class GroundBlock(x : Float, y : Float, width : Float, height : Float) : Rectangle(x, y, width, height) {
+class GroundBlock(x : Float, y : Float, width : Float, height : Float) : Block(x, y, width) {
+
+    init{
+        this.height = height
+    }
+
 
     //Use this to find if floor is "solid" or not
-    fun collision(block : Block, collisionRadius : Float = 2f) : Boolean{ //collusionRadius in pixels
+    override fun collision(block : Block, collisionRadius : Float) : Boolean{ //collusionRadius in pixels
         if (this.overlaps(block)){ //lazy eval
             return true
         }
@@ -20,5 +25,6 @@ class GroundBlock(x : Float, y : Float, width : Float, height : Float) : Rectang
 
         return false
     }
+
 
 }

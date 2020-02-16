@@ -25,6 +25,11 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
         ON_PLATFORM, OFF_PLATFORM, BETWEEN_PLATFORMS
     }
 
+    enum class InputState{ //Is the input being continuously given (by .isTouched, etc)
+        HELD, NONE
+    }
+
+    var inputState = InputState.NONE //change to held while held
     var onPlatformState = OnPlatformState.OFF_PLATFORM
 
     val jumpSpeed = 20f //jump by 2 px each frame
@@ -103,11 +108,16 @@ class Player(x : Float, y : Float, size : Float, var health : Int, var bullets :
             }
         }
         else if (jumpState == JumpState.ASCENDING){
-            if (this.y < jumpApex){
-                this.y += jumpSpeed
-            }
-            else{ //delays descention by a frame, should be fine
-                jumpState = JumpState.DESCENDING
+            if(inputState == InputState.HELD) { //If currently ascending and .isTouched()
+                //Do as normal
+                if (this.y < jumpApex) {
+                    this.y += jumpSpeed
+                } else { //delays descention by a frame, should be fine
+                    jumpState = JumpState.DESCENDING
+                }
+            }else{ //If currently ascending and not .IsTouched()
+                jumpState == JumpState.DESCENDING
+                this.gravity()
             }
         }
         else if (jumpState == JumpState.DESCENDING){

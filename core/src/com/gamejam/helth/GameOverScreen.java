@@ -14,8 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import sun.applet.Main;
-
 
 public class GameOverScreen implements Screen { //Depreciated, see EndScreen
 

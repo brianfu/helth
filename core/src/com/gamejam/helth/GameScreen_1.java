@@ -1,6 +1,7 @@
 package com.gamejam.helth;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -155,11 +156,14 @@ public class GameScreen_1 implements Screen {
 
 
 
-        if (Gdx.input.justTouched()) {
+        if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
+            vegetable.setInputState(Player.InputState.HELD);
             vegetable.jump(); //TODO: this only works sometimes, no idea why
+        } else{
+            vegetable.setInputState(Player.InputState.NONE);
         }
 
         if (TimeUtils.nanoTime() - lastDropTime > 2000000000L) {

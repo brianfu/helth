@@ -18,7 +18,7 @@ class BulletBlock(x : Float, y : Float, size : Float,
             usedBullet = true
         }
 
-        if (this.x > goal_x){ //if bullet is not there yet
+        if (this.x + 150f > goal_x){ //if bullet is not there yet
             this.x -= bulletSpeed //bullets move toward player's original position
         }else{
             usedBullet = true

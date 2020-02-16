@@ -12,7 +12,7 @@ class MeleeEnemyBlock(x : Float, y : Float, size : Float,
 
     //assume this enemy moves left and right
 
-    val MeleeEnemyImage = Texture("bucket.png")
+    val MeleeEnemyImage = Texture("runner.png")
 
     var movingLeft = true; //false => movingRight
     fun moveAround(){ //Call on every render

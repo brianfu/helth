@@ -50,7 +50,7 @@ class EndScreen(val game : Helth, val time: Float  ) : Screen {
         game.font.draw(game.batch, "Press to play again!", 700f, 300f)
         game.batch.end()
 
-        if (Gdx.input.justTouched() || Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+        if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             game.screen = MainMenuScreen(game)
             dispose()
         }

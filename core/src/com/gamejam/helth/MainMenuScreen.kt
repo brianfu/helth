@@ -1,6 +1,7 @@
 package com.gamejam.helth
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -31,7 +32,7 @@ class MainMenuScreen(val game: Helth) : Screen {
         game.batch.draw(backgroundTexture, 0f, 0f, 2220f, 1080f)
         game.font.draw(game.batch, "Press anywhere to play!", 700f, 350f)
         game.batch.end()
-        if (Gdx.input.justTouched()) {
+        if (Gdx.input.justTouched() || Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 //            game.startTime = TimeUtils.millis()
             game.screen = GameScreen_1(game)
             dispose()

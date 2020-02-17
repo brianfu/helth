@@ -1,6 +1,7 @@
 package com.gamejam.helth
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -49,7 +50,7 @@ class EndScreen(val game : Helth, val time: Float  ) : Screen {
         game.font.draw(game.batch, "Press to play again!", 700f, 300f)
         game.batch.end()
 
-        if (Gdx.input.justTouched()){
+        if (Gdx.input.justTouched() || Gdx.input.isKeyPressed(Input.Keys.SPACE)){
             game.screen = MainMenuScreen(game)
             dispose()
         }
